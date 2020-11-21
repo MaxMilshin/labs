@@ -1,14 +1,18 @@
-#include "stdio.h"
-#include "stdbool.h"
+#include <stdio.h>
+#include <stdbool.h>
 #include <assert.h> 
 #include "str.h"
 
-bool are_they_equals(char *s1, char *s2) {
+bool are_they_equal(char *s1, char *s2) {
   while (*s1 != '\0' && *s1 == *s1) {
     s1++;
     s2++;
   }
   return (*s1 == *s2);
+}
+
+void print_message(char *function_name) {
+  printf("Test for function %s is succesfully passed!\n", function_name);  
 }
 
 
@@ -17,8 +21,8 @@ void test_strcpy() {
   char* s2 = "Hello";
   char* expected_ans = "Hello";
   char* actual_ans = my_strcpy(s1, s2);
-  assert(are_they_equals(expected_ans, actual_ans));
-  printf("%s", "Test for function my_strcpy is succesfully passed!\n"); 
+  assert(are_they_equal(expected_ans, actual_ans));
+  print_message("my_strcpy"); 
 } 
 
 void test_strcat() {
@@ -26,8 +30,8 @@ void test_strcat() {
   char* s2 = "Max";
   char* expected_ans = "HelloMax";
   char* actual_ans = my_strcat(s1, s2);
-  assert(are_they_equals(expected_ans, actual_ans));
-  printf("%s", "Test for function my_strcat is succesfully passed!\n");
+  assert(are_they_equal(expected_ans, actual_ans));
+  print_message("my_strcat");
 }
 
 void test_strcmp() {
@@ -36,7 +40,7 @@ void test_strcmp() {
   int expected_ans = 7;
   int actual_ans = my_strcmp(s1, s2);
   assert(expected_ans == actual_ans);
-  printf("%s", "Test for function my_strcmp is succesfully passed!\n");
+  print_message("my_strcmp");
 }
 
 void test_strlen() {
@@ -44,7 +48,6 @@ void test_strlen() {
   int expected_ans = 7;
   int actual_ans = my_strlen(s);
   assert(expected_ans == actual_ans);
-  printf("%s", "Test for function my_strlen in succesfully passed!\n");
+  print_message("my_strlen");
 }
-
 
