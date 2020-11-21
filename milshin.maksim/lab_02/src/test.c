@@ -1,4 +1,4 @@
-#include "stdio.h"
+#include <stdio.h>
 #include "test_str.h"
 
 int main(void) {
