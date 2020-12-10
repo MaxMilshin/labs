@@ -13,6 +13,7 @@ void savebin(struct intrusive_node* cur_node, void* data) {
   struct point* p = container_of(cur_node, struct point, node);
   fwrite(&(p->x), 3, 1, (FILE*) data);
   fwrite(&(p->y), 3, 1, (FILE*) data);
+  fwrite("\n", 1, 1, (FILE*)data);
 }
 
 void print(struct intrusive_node* cur_node, void* data) {
@@ -37,13 +38,16 @@ int main(int argc, char* argv[]) {
   init_list(&list);
   FILE* in_file = fopen(argv[2], "r");
   assert(in_file);
-  while (!feof(in_file)) {
+  while (1) {
     int x, y;
     if (strcmp(argv[1], "loadtext") == 0)
-      fscanf(in_file, "%d %d\n", &x, &y);
+      if (fscanf(in_file, "%d %d\n", &x, &y) != 2)
+        break;
     if (strcmp(argv[1], "loadbin") == 0) {
-      fread(&x, 3, 1, in_file);
-      fread(&y, 3, 1, in_file);
+      if (!fread(&x, 3, 1, in_file) || !fread(&y, 3, 1, in_file))
+        break;
+      char c;
+      fread(&c, 1, 1, in_file);
     }
     add_point(&list, x, y);
   }
