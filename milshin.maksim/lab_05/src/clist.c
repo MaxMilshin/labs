@@ -38,14 +38,14 @@ void init_list(struct intrusive_list* list) {
 }
 
 void reverse_list(struct intrusive_list* list) {
-  struct intrusive_node* cur_node = list->head;
-  while (cur_node->next) {
-    struct intrusive_node* next_node = cur_node->next;
-    cur_node->next = cur_node->prev;
-    cur_node->prev = next_node;
-    cur_node = next_node;
-  }
-  cur_node->next = cur_node->prev;
-  cur_node->prev = NULL;
-  list->head = cur_node;
+ 	struct intrusive_node* cur_node = list->head;
+  	while (cur_node->next) {
+    	struct intrusive_node* next_node = cur_node->next;
+    	cur_node->next = cur_node->prev;
+    	cur_node->prev = next_node;
+    	cur_node = next_node;
+  	}
+  	cur_node->next = cur_node->prev;
+  	cur_node->prev = NULL;
+  	list->head = cur_node;
 }
