@@ -60,32 +60,3 @@ void release_all_nodes(struct intrusive_node* cur_node){
         free(p);
     }
 }
-
-/* int main() {
-    struct intrusive_list list;
-    init_list(&list);
-    char command[10];
-    int x, y;
-    while (true) {
-        scanf("%9s", command);
-        if (strcmp(command, "add") == 0) {
-            scanf("%d %d", &x, &y);
-            add_point(&list, x, y);
-        }
-        else if (strcmp(command, "rm") == 0) {
-            scanf("%d %d", &x, &y);
-            remove_point(&list, x, y);
-        }
-        else if (strcmp(command, "print") == 0) 
-            show_all_points(&list);
-        else if (strcmp(command, "rma") == 0)
-            remove_all_points(&list);
-        else if (strcmp(command, "len") == 0)
-            printf("%d\n", get_length(&list));
-        else if (strcmp(command, "exit") == 0)
-            break;
-        else 
-            printf("Unknown command\n");
-    }
-    release_all_nodes(list.head);
-} */

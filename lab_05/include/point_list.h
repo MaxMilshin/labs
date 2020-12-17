@@ -4,8 +4,8 @@
 #define POINT_LIST_H
 
 struct point {
-  int x, y;
-  struct intrusive_node node;
+	int x, y;
+	struct intrusive_node node;
 };
 
 void add_point(struct intrusive_list* list, int x, int y);
