@@ -21,9 +21,8 @@ RGBQUAD ** load_bmp(unsigned char* info, char* file_name) {
     int n = max(width, height);
 
     RGBQUAD **rgb = malloc(n * sizeof(RGBQUAD*));
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) 
         rgb[i] = malloc(n * sizeof(RGBQUAD));
-    }
 
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -68,9 +67,12 @@ void rotate(unsigned char* info, RGBQUAD ***rgb) {
             (*rgb)[x2][y2] = (*rgb)[x1][y1];
             (*rgb)[x1][y1] = tmp;
         }
+
     for (int i = 0; i < width; i++)
         for (int j = 0; j < height; j++)
             (*rgb)[i][j] = (*rgb)[i][j + n - height]; 
+
+    // обновляем ширину и высоту изображения    
     *(int*)&info[18] = height;
     *(int*)&info[22] = width;        
 }
@@ -79,10 +81,14 @@ void save_bmp(unsigned char* info, RGBQUAD ***rgb, char* file_name) {
     FILE* f = fopen(file_name, "wb");
     assert(f);
 
-    fwrite(info, sizeof(unsigned char), 54, f);
-
     int width = *(int*)&info[18];
     int height = *(int*)&info[22];
+    
+    // обновляем размер файла и изображения
+    *(int*)&info[2] = height * (width * 3 + (4 - (width * 3) % 4) % 4) + 54;
+    *(int*)&info[34] = *(int*)&info[2] - 54;
+    
+    fwrite(info, sizeof(unsigned char), 54, f);
     
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -96,4 +102,10 @@ void save_bmp(unsigned char* info, RGBQUAD ***rgb, char* file_name) {
     }
 
     fclose(f);
+}
+
+void release_memory(RGBQUAD ***rgb, int n) {
+    for (int i = 0; i < n; i++)
+        free((*rgb)[i]);
+    free(*rgb);
 }
