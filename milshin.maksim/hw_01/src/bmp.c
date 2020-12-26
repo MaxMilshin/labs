@@ -96,9 +96,11 @@ void save_bmp(unsigned char* info, RGBQUAD ***rgb, char* file_name) {
             fwrite(&((*rgb)[height - i - 1][j].rgbGreen), 1, 1, f);
             fwrite(&((*rgb)[height - i - 1][j].rgbRed), 1, 1, f);
         }
+
+        // выравнивание нулями
         int rest = (4 - (3 * width) % 4) % 4;
         for (int i = 0; i < rest; i++)
-          fwrite("\n", 1, 1, f);
+            putc(0, f);
     }
 
     fclose(f);
