@@ -2,35 +2,22 @@
 
 #include <iostream>
 
-MyVector::MyVector() {
-    _data = nullptr;
-    _capacity = 0;
-    _size = 0;
-} 
-
 MyVector::MyVector(size_t init_capacity) {
     _data = new int[init_capacity];
     _capacity = init_capacity;
     _size = 0;
 }
 
+MyVector::MyVector(MyVector const & other) {
+    _data = new int[other._capacity];
+    _capacity = other._capacity;
+    _size = other._size;
+    for (int i = 0; i < _size; i++)
+        _data[i] = other._data[i];        
+}
+
 MyVector::~MyVector() {
     delete [] _data;
-}
-
-void MyVector::set(size_t index, int value) {
-    _data[index] = value;
-}
-
-int MyVector::get(size_t index) {
-    return _data[index];
-}
-
-size_t MyVector::size() {
-    return _size;
-}
-size_t MyVector::capacity() {
-    return _capacity;
 }
 
 void MyVector::reserve(size_t new_capacity) {
@@ -74,4 +61,11 @@ void MyVector::erase(size_t index) {
     for (int i = index + 1; i < _size; i++) 
         _data[i - 1] = _data[i];
     _size--;
+}
+
+MyVector & MyVector::operator =(MyVector other) {
+    std::swap(_data, other._data);
+    std::swap(_size, other._size);
+    std::swap(_capacity, other._capacity);
+    return *this;
 }
