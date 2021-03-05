@@ -41,7 +41,6 @@ private:
     std::size_t _cols;
     int **_data;
 
-    Matrix add(Matrix& m, int sign) const;
     void commonConstructor(std::size_t r, std::size_t c);
 };
 

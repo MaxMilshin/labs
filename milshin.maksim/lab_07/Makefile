@@ -3,16 +3,16 @@
 CXX=g++
 CXXFLAGS=-std=c++98 -Wall -pedantic
 
-all: main
+all: lab_07
 
 bin:
 	mkdir -p bin
 
-main: src/main.cpp bin/matrix.o include/*.hpp bin
+lab_07: src/main.cpp bin/matrix.o include/*.hpp bin
 	$(CXX) $(CXXFLAGS) -o $@ -Iinclude $< bin/*
 
 bin/%.o: src/%.cpp include/*.hpp bin
 	$(CXX) $(CXXFLAGS) -c -o $@ -Iinclude $<
 
 clean:
-	rm -rf bin main
+	rm -rf bin lab_07
