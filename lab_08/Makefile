@@ -1,6 +1,5 @@
 CXX = g++
 CXXFLAGS = -O2 -Wall -std=c++17 -Iinclude
-# убрал -Werror, потому что компилятор ругался на строчку из main'а:  p2 = p2; 
 LDFLAGS = 
 
 EXE = lab_08
