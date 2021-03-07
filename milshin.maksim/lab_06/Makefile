@@ -1,18 +1,18 @@
 .PHONY: all
-all: lab_06
+all: main
 
-lab_06: obj/main.o obj/my_vector.o 
-	g++ obj/main.o obj/my_vector.o -o lab_06
+main: obj/main.o obj/all_sorts.o 
+	g++ obj/main.o obj/all_sorts.o -o main
 
 obj:
 	mkdir obj
 
-obj/main.o: src/main.cpp include/my_vector.hpp | obj
+obj/main.o: src/main.cpp include/library.hpp | obj
 	g++ -std=c++17 -c -I include src/main.cpp -o obj/main.o
 
-obj/my_vector.o: src/my_vector.cpp include/my_vector.hpp | obj
-	g++ -std=c++17 -c -I include src/my_vector.cpp -o obj/my_vector.o
+obj/all_sorts.o: src/all_sorts.cpp | obj
+	g++ -std=c++17 -c -I include src/all_sorts.cpp -o obj/all_sorts.o
 
 .PHONY: clean
 clean:
-	rm -rf lab_06 obj
+	rm -rf main obj
