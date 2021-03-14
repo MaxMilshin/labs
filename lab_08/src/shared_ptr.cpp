@@ -1,12 +1,13 @@
+#include <algorithm>
+
 #include "shared_ptr.hpp"
 
-shared_ptr::shared_ptr(Matrix* obj) {
-	storage_ = new Storage(obj);
-}
+shared_ptr::shared_ptr(Matrix* obj)
+	: storage_(obj ? new Storage(obj) : nullptr) {}
 
-shared_ptr::shared_ptr(const shared_ptr& other) {
-	storage_ = other.storage_;
-	storage_->incr();
+shared_ptr::shared_ptr(const shared_ptr& other): storage_(other.storage_) {
+	if (storage_)
+		storage_->incr();
 }
 
 shared_ptr& shared_ptr::operator=(shared_ptr other) {
@@ -15,20 +16,22 @@ shared_ptr& shared_ptr::operator=(shared_ptr other) {
 }
 
 shared_ptr::~shared_ptr() {
-	storage_->decr();
+	if (storage_)
+		storage_->decr();
 }
 
 Matrix* shared_ptr::ptr() const {
-	return storage_->getObject();
+	return storage_ ? storage_->getObject() : nullptr;
 }
 
 bool shared_ptr::isNull() const {
-	return (storage_->getObject() == nullptr);
+	return (storage_ == nullptr);
 }
 
 void shared_ptr::reset(Matrix* obj) {
-	storage_->decr();
-	storage_ = new Storage(obj);
+	if (storage_)
+		storage_->decr();
+	storage_ = obj ? new Storage(obj) : nullptr;
 }
 
 Matrix* shared_ptr::operator->() const {
@@ -45,13 +48,12 @@ Matrix& shared_ptr::operator*() const {
 
 
 
-shared_ptr::Storage::Storage(Matrix* mtx) {
-    data_ = mtx;
-    incr();
+shared_ptr::Storage::Storage(Matrix* mtx) : data_(mtx) {
+	incr();
 }
 
 shared_ptr::Storage::~Storage() {
-    delete data_;
+	delete data_;
 }
 
 void shared_ptr::Storage::incr() {
@@ -59,8 +61,8 @@ void shared_ptr::Storage::incr() {
 }
 
 void shared_ptr::Storage::decr() {
-    if (--ref_count_ == 0)
-        delete data_;
+	if (--ref_count_ == 0)
+		delete this;
 }
 
 int shared_ptr::Storage::getCounter() const {
