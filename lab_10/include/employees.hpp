@@ -7,53 +7,77 @@
 
 class Employee {
 public:
-    Employee(std::string name, int32_t base_salary);
-    virtual ~Employee() = default;
+    Employee(int type, char* name, int32_t base_salary);
+    virtual ~Employee();
 
-    virtual int salary() const = 0;
+    virtual int32_t salary() const = 0;
 
-    static Employee * readEmployee();
+    static Employee * createEmployee(std::istream&); 
+    friend std::istream& operator >> (std::istream&, Employee *);
+    
+    static Employee * createEmployee(std::ifstream&);
+    friend std::ifstream& operator >> (std::ifstream&, Employee *);
+    
+    friend std::ostream& operator << (std::ostream&, Employee *);
 
-    virtual std::ostream& print (std::ostream&) const = 0;
-    friend std::ostream& operator << (std::ostream&, Employee&);
+    friend std::ofstream& operator << (std::ofstream&, Employee *);
 
 protected:
-    std::string _name;
+    virtual std::istream& read(std::istream&);
+    virtual std::ifstream& load(std::ifstream&);
+
+    virtual std::ostream& print (std::ostream&) const;
+    virtual std::ofstream& save (std::ofstream&) const;
+
+private:
+    static const int MAX_NAME_LENGTH = 110;
+    
+protected:
+    int _type;
+    char* _name;
     int32_t _base_salary;
 };
 
 
 class Developer : public Employee {
 public:
-    int salary() const override {
-        int salary = _base_salary;
+    int32_t salary() const override {
+        int32_t salary = _base_salary;
         if (_has_bonus) { salary += 1000; }
             return salary;
     }
 
-    Developer(std::string name, int32_t base_salary, bool has_bonus);
+    Developer(int type, char* name = nullptr, int32_t base_salary = 0, bool has_bonus = false);
     ~Developer() = default;
 
-    std::ostream& print (std::ostream&) const override;
+protected:
+    std::istream& read(std::istream&) override;
+    std::ifstream& load(std::ifstream&) override;
 
-  /* ?? operator<<(??); */
-private:
+    std::ostream& print (std::ostream&) const override;
+    std::ofstream& save (std::ofstream&) const override;
+
+protected:
     bool _has_bonus;
 };
 
 class SalesManager : public Employee {
 public:
-    int salary() const override {
+    int32_t salary() const override {
         return _base_salary + _sold_nm * _price * 0.01;
     }
-
-    SalesManager(std::string name, int32_t base_salary, int32_t sold_nm, int32_t price);
+    
+    SalesManager(int type, char* name = nullptr, int32_t base_salary = 0, int32_t sold_nm = 0, int32_t price = 0);
     ~SalesManager() = default;
 
+protected:
+    std::istream& read(std::istream&) override;
+    std::ifstream& load(std::ifstream&) override;
+
     std::ostream& print (std::ostream&) const override;
-    /* ?? operator>>(??); */
-    /* ?? operator<<(??); */
-private:
+    std::ofstream& save (std::ofstream&) const override;
+
+protected:
     int32_t _sold_nm, _price;
 };
 
@@ -66,7 +90,10 @@ public:
     void add(Employee *e);
     int32_t total_salary() const;
 
+    friend std::ofstream& operator << (std::ofstream&, EmployeesArray&);
     friend std::ostream& operator << (std::ostream&, EmployeesArray&);
+    friend std::ifstream& operator >> (std::ifstream&, EmployeesArray&);
+
 private:
     std::vector<Employee *> _employees;
 };
