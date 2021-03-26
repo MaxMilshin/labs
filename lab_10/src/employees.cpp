@@ -1,6 +1,6 @@
 #include "employees.hpp"
 
-#include <string>
+#include <string.h>
 #include <iostream>
 #include <fstream>
 
@@ -178,7 +178,7 @@ std::ostream& operator << (std::ostream& out, EmployeesArray& array) {
 std::ofstream& operator << (std::ofstream& out, EmployeesArray& array) {
 	int size = array._employees.size();
 	out.write(reinterpret_cast<char*>(&size), sizeof size);
-	for (size_t i = 0; i < size; i++) {
+	for (int i = 0; i < size; i++) {
 		out << array._employees[i];
 	}
 	return out;
@@ -187,7 +187,7 @@ std::ofstream& operator << (std::ofstream& out, EmployeesArray& array) {
 std::ifstream& operator >> (std::ifstream& in, EmployeesArray& array) {
 	int size;
 	in.read(reinterpret_cast<char*>(&size), sizeof size);
-	for (size_t i = 0; i < size; i++) {
+	for (int i = 0; i < size; i++) {
 		Employee *e = Employee::createEmployee(in);
 		in >> e;
 		array.add(e);
