@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <cassert>
 
 #include "Scheme.hpp"
 #include "Rectangle.hpp"

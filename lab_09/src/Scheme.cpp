@@ -23,11 +23,8 @@ void Scheme::push_back_figure(Figure* fg) {
 void Scheme::remove_figure(int id) {
 	std::size_t index = get_figure_index(id);
 	if (index != sz) {
-		delete figures_[index];
-		std::size_t index = get_figure_index(id);
-		for (std::size_t i = index + 1; i < sz; i++) 
-			figures_[i - 1] = figures_[i];
-		sz--;
+		std::swap(figures_[index], figures_[sz - 1]);
+		delete figures_[--sz];
 	}
 }
 
