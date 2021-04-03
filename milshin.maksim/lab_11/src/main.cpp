@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cassert>
+#include <string.h>
 
 #include "my_vector.hpp"
 #include "my_vector_impl.hpp"
@@ -10,13 +11,13 @@ class Product {
 public:
     Product(const char* name, int quantity, double price)
     : quantity_(quantity), price_(price) {
-    	name_ = new char[strlen(name)];
+    	name_ = new char[strlen(name) + 1];
     	strcpy(name_, name);
     }
 
     Product(const Product & other)
     : quantity_(other.quantity_), price_(other.price_)  {
-    	name_ = new char[strlen(other.name_)];
+    	name_ = new char[strlen(other.name_) + 1];
     	strcpy(name_, other.name_);
     }
 
