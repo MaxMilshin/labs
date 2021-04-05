@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include "my_vector.hpp"
-#include "my_vector_impl.hpp"
 
 namespace product {
 
@@ -46,10 +45,11 @@ template<typename T>
 void test_my_vector(T t1, T t2) {
     // constructor check
     containers::my_vector<T> v;
-    assert(v.size() == 0 && v.capacity() == 2); 
+    assert(v.size() == 0 && v.capacity() == 1); 
     
     // push_back && pop_back check 
     v.push_back(t1); 
+    assert(v.size() == 1 && v.capacity() == 1);
     v.push_back(t2);
     assert(v.size() == 2 && v.capacity() == 2); 
     v.pop_back();

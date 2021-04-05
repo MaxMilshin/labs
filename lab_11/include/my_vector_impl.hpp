@@ -1,3 +1,5 @@
+#include <new>
+
 namespace containers {
 
 template<typename T>
@@ -8,7 +10,7 @@ std::size_t my_vector<T>::new_capacity(std::size_t n) {
 }
 
 template<typename T>
-my_vector<T>::my_vector() : capacity_(2), size_(0) {
+my_vector<T>::my_vector() : capacity_(1), size_(0) {
 	array_ = reinterpret_cast<T*>(new char[capacity_ * sizeof(T)]);
 }
 
@@ -31,11 +33,10 @@ my_vector<T>::my_vector(const my_vector& other)
 }
 
 template<typename T>
-my_vector<T> my_vector<T>::operator=(my_vector other) {
+void my_vector<T>::operator=(my_vector other) {
 	std::swap(size_, other.size_);
 	std::swap(capacity_, other.capacity_);
 	std::swap(array_, other.array_);
-	return *this;
 }
 
 template<typename T>
@@ -102,7 +103,7 @@ void my_vector<T>::reserve(std::size_t n) {
 
 
 template<typename T>
-void my_vector<T>::push_back(T t) {
+void my_vector<T>::push_back(const T& t) {
 	reserve(size_ + 1);
 	new(&array_[size_++]) T(t);
 }
@@ -117,9 +118,8 @@ void my_vector<T>::clear() {
 	resize_down(0);
 }
 
-
 template<typename T>
-T my_vector<T>::operator[](std::size_t index) const {
+T const & my_vector<T>::operator[](std::size_t index) const {
 	return array_[index];
 }
 

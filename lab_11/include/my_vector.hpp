@@ -11,7 +11,7 @@ public:
     my_vector();
     my_vector(std::size_t n);
     my_vector(const my_vector& other);
-    my_vector operator=(my_vector other);
+    void operator=(my_vector other);
     ~my_vector();
 
     std::size_t size() const;
@@ -22,9 +22,9 @@ public:
     void reserve(std::size_t n);
 
     T& operator[](std::size_t index);
-    T operator[](std::size_t index) const;
+    T const & operator[](std::size_t index) const;
 
-    void push_back(T t);
+    void push_back(const T& t);
     void pop_back();
     void clear();
 
@@ -44,6 +44,6 @@ private:
 
 }
 
-// #include "my_vector_impl.h"
+#include "my_vector_impl.hpp"
 
 #endif  // MY_VECTOR_H_
