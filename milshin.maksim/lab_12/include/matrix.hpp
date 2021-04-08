@@ -3,8 +3,10 @@
 class Matrix {
 public:
 	Matrix(std::size_t rows, std::size_t cols);
-	~Matrix() noexcept = default;
-
+	~Matrix() noexcept {
+		std::cout << "Destructor: |" << " rows: " << rows << " | cols: " << cols << std::endl;
+	//= default;
+	}
 	void operator = (Matrix other);
 
 	static Matrix* load(std::ifstream &);

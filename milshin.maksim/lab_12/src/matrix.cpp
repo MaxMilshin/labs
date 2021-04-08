@@ -5,7 +5,9 @@
 
 Matrix::Matrix(std::size_t rows, std::size_t cols) : 
 	rows(rows), cols(cols), 
-	data(std::vector<std::vector<int>>(rows, std::vector<int>(cols))) {}
+	data(std::vector<std::vector<int>>(rows, std::vector<int>(cols))) {
+		std::cout << "constructor!" << std::endl;
+	}
 
 void Matrix::operator = (Matrix other) {
 	std::swap(data, other.data);
@@ -17,10 +19,8 @@ void Matrix::operator = (Matrix other) {
 Matrix* Matrix::load(std::ifstream &in) {
 	std::size_t rows, cols;
 	if (!(in >> rows >> cols)) {
-		// std::cout << rows << " " << cols << std::endl;
 		throw MatrixException("LOAD: invalid file format.");
 	} 
-	// std::cout << rows << " " << cols << std::endl;
 	Matrix* matrix = new Matrix(rows, cols);
 	in >> matrix;
 	return matrix;
@@ -84,7 +84,7 @@ Matrix* Matrix::operator *(const Matrix & other) const noexcept {
 }
 
 int Matrix::get_element(int row, int col) const {
-	if (row >= rows || row < 0 || col >= cols || col < 0) {
+	if (col < 0 || row < 0 || col >= (int)cols || row >= (int)rows) {
 		throw MatrixException("ACCESS: bad index.");
 	}
 	return data[row][col];
