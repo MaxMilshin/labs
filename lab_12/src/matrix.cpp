@@ -51,7 +51,6 @@ void Matrix::add(const Matrix & other) {
 	if (rows != other.rows || cols != other.cols) {
 		throw MatrixException("ADD: dimensions do not match."); 
 	}
-	std::cout << "Im here" << std::endl;
 	*this += other; 
 }
 
@@ -59,7 +58,6 @@ void Matrix::operator +=(const Matrix & other) noexcept {
 	for (std::size_t i = 0; i < rows; i++) {
 		for (std::size_t j = 0; j < cols; j++) {
 			data[i][j] += other.data[i][j];
-			std::cout << "now Im here" << std::endl;
 		}
 	}
 }
@@ -71,7 +69,7 @@ void Matrix::multiply(const Matrix & other) {
 	*this = *(*this * other);
 }
 
-Matrix* Matrix::operator *(const Matrix & other) const noexcept {
+std::unique_ptr<Matrix> Matrix::operator *(const Matrix & other) const noexcept {
 	Matrix* product = new Matrix(rows, other.cols);
 	for (std::size_t i = 0; i < rows; i++) {
 		for (std::size_t j = 0; j < other.cols; j++) {
@@ -80,7 +78,7 @@ Matrix* Matrix::operator *(const Matrix & other) const noexcept {
 			}
 		}
 	}
-	return product;
+	return std::unique_ptr<Matrix>(product);
 }
 
 int Matrix::get_element(int row, int col) const {
