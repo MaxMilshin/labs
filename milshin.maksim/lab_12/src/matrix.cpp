@@ -1,5 +1,6 @@
 #include <fstream>
 #include <vector>
+#include <memory>
 
 #include "matrix.hpp"
 
@@ -18,17 +19,17 @@ void Matrix::load(Matrix &destination, std::ifstream &in) {
 	std::size_t rows, cols;
 	if (!(in >> rows >> cols)) {
 		throw MatrixException("LOAD: invalid file format.");
-	} 
-	Matrix* matrix = new Matrix(rows, cols);
-	in >> matrix;
+	}
+	std::unique_ptr<Matrix> matrix(new Matrix(rows, cols)); 
+	// Matrix* matrix = new Matrix(rows, cols);
+	in >> *matrix;
 	destination = *matrix;
-	delete matrix;
 }
 
-std::ifstream& operator >>(std::ifstream &in, Matrix* matrix) {
-	for (std::size_t i = 0; i < matrix->rows; i++) {
-		for (std::size_t j = 0; j < matrix->cols; j++) {
-			if (!(in >> matrix->data[i][j])) {
+std::ifstream& operator >>(std::ifstream &in, Matrix &matrix) {
+	for (std::size_t i = 0; i < matrix.rows; i++) {
+		for (std::size_t j = 0; j < matrix.cols; j++) {
+			if (!(in >> matrix.data[i][j])) {
 				throw MatrixException("LOAD: invalid file format.");
 			}
 		}
