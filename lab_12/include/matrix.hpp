@@ -10,7 +10,7 @@ public:
 	}
 	void operator = (Matrix other);
 
-	static Matrix* load(std::ifstream &);
+	static void load(Matrix &, std::ifstream &);
 	
 	void print() const noexcept;
 
