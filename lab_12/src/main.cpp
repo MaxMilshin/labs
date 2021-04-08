@@ -15,10 +15,8 @@ int num(std::string reg) {
 }
 
 int main() {
-	std::vector<Matrix*> registers(REGISTERS_COUNT);
-	for (std::size_t i = 0; i < REGISTERS_COUNT; i++)
-		registers[i] = new Matrix(0, 0);
-
+	Matrix registers[REGISTERS_COUNT];
+	
 	while (true) {
 		try {
 			char command[MAX_COMMAND_LEN];
@@ -32,24 +30,24 @@ int main() {
 					std::cerr << "LOAD: unable to open file." << std::endl;
 					continue;
 				}
-				*registers[num(reg1)] = *Matrix::load(in);
+				registers[num(reg1)] = *Matrix::load(in);
 			}
 			if (strcmp(command, "print") == 0) {
 				std::cin >> reg1;
-				registers[num(reg1)]->print();
+				registers[num(reg1)].print();
 			}
 			if (strcmp(command, "add") == 0) {
 				std::cin >> reg1 >> reg2;
-				registers[num(reg1)]->add(*registers[num(reg2)]);
+				registers[num(reg1)].add(registers[num(reg2)]);
 			}
 			if (strcmp(command, "mul") == 0) {
 				std::cin >> reg1 >> reg2;
-				registers[num(reg1)]->multiply(*registers[num(reg2)]);
+				registers[num(reg1)].multiply(registers[num(reg2)]);
 			}
 			if (strcmp(command, "elem") == 0) {
 				int row, col;
 				std::cin >> reg1 >> row >> col;
-				std::cout << registers[num(reg1)]->get_element(row, col) << std::endl;
+				std::cout << registers[num(reg1)].get_element(row, col) << std::endl;
 			}
 			if (strcmp(command, "exit") == 0) {
 				break;
@@ -60,9 +58,6 @@ int main() {
 			std::cerr << "Unable to allocate memory." << std::endl;
 		}
 	}
-	
-	for (std::size_t i = 0; i < REGISTERS_COUNT; i++)
-		delete registers[i];
 	
 	return 0;
 }
