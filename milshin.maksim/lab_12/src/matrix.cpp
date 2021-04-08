@@ -6,7 +6,7 @@
 Matrix::Matrix(std::size_t rows, std::size_t cols) : 
 	rows(rows), cols(cols), 
 	data(std::vector<std::vector<int>>(rows, std::vector<int>(cols))) {
-		std::cout << "constructor!" << std::endl;
+		std::cout << "constructor: " << std::endl;
 	}
 
 void Matrix::operator = (Matrix other) {
