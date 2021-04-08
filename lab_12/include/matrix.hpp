@@ -3,11 +3,7 @@
 class Matrix {
 public:
 	Matrix(std::size_t rows = 0, std::size_t cols = 0);
-	~Matrix() noexcept {
-		std::cout << "Destructor: |" << std::endl;
-		print();
-	//= default;
-	}
+	~Matrix() noexcept = default;
 	void operator = (Matrix other);
 
 	static void load(Matrix &, std::ifstream &);
