@@ -5,9 +5,7 @@
 
 Matrix::Matrix(std::size_t rows, std::size_t cols) : 
 	rows(rows), cols(cols), 
-	data(std::vector<std::vector<int>>(rows, std::vector<int>(cols))) {
-		std::cout << "constructor: " << std::endl;
-	}
+	data(std::vector<std::vector<int>>(rows, std::vector<int>(cols))) {}
 
 void Matrix::operator = (Matrix other) {
 	std::swap(data, other.data);
