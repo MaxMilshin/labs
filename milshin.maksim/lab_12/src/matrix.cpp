@@ -16,14 +16,15 @@ void Matrix::operator = (Matrix other) {
 }
 
 
-Matrix* Matrix::load(std::ifstream &in) {
+void Matrix::load(Matrix &destination, std::ifstream &in) {
 	std::size_t rows, cols;
 	if (!(in >> rows >> cols)) {
 		throw MatrixException("LOAD: invalid file format.");
 	} 
 	Matrix* matrix = new Matrix(rows, cols);
 	in >> matrix;
-	return matrix;
+	destination = *matrix;
+	delete matrix;
 }
 
 std::ifstream& operator >>(std::ifstream &in, Matrix* matrix) {

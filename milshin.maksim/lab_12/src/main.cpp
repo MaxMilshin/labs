@@ -30,7 +30,7 @@ int main() {
 					std::cerr << "LOAD: unable to open file." << std::endl;
 					continue;
 				}
-				registers[num(reg1)] = *Matrix::load(in);
+				Matrix::load(registers[num(reg1)], in);
 			}
 			if (strcmp(command, "print") == 0) {
 				std::cin >> reg1;
@@ -58,6 +58,7 @@ int main() {
 			std::cerr << "Unable to allocate memory." << std::endl;
 		}
 	}
+	
 	
 	return 0;
 }
