@@ -16,7 +16,7 @@ public:
 	int get_element(int row, int col) const;
 
 private:
-	friend std::ifstream& operator >>(std::ifstream &, Matrix*);
+	friend std::ifstream& operator >>(std::ifstream &, Matrix &);
 	void operator +=(const Matrix & other) noexcept;
 	Matrix* operator *(const Matrix & other) const noexcept;
 
