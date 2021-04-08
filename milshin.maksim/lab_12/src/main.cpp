@@ -57,7 +57,7 @@ int main() {
 		} catch (const MatrixException& e) {
 			std::cerr << e.get_message() << std::endl;
 		} catch (const std::bad_alloc& e) {
-			std::cerr << "Bad alloc!" << std::endl;
+			std::cerr << "Unable to allocate memory." << std::endl;
 		}
 	}
 	
