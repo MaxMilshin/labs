@@ -17,8 +17,8 @@ public:
 
 private:
 	friend std::ifstream& operator >>(std::ifstream &, Matrix &);
-	void operator +=(const Matrix & other) noexcept;
-	std::unique_ptr<Matrix> operator *(const Matrix & other) const noexcept;
+	void operator +=(const Matrix & other);
+	std::unique_ptr<Matrix> operator *(const Matrix & other) const;
 
 private:
 	std::size_t rows, cols;

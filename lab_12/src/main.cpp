@@ -27,7 +27,7 @@ int main() {
 				std::cin >> reg1 >> filename;
 				std::ifstream in(filename, std::ios::in);
 				if (!in.is_open()) {
-					std::cerr << "LOAD: unable to open file." << std::endl;
+					std::cout << "LOAD: unable to open file." << std::endl;
 					continue;
 				}
 				Matrix::load(registers[num(reg1)], in);
@@ -53,9 +53,9 @@ int main() {
 				break;
 			}
 		} catch (const MatrixException& e) {
-			std::cerr << e.get_message() << std::endl;
+			std::cout << e.get_message() << std::endl;
 		} catch (const std::bad_alloc& e) {
-			std::cerr << "Unable to allocate memory." << std::endl;
+			std::cout << "Unable to allocate memory." << std::endl;
 		}
 	}
 	

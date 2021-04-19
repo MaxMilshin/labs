@@ -41,20 +41,23 @@ std::ifstream& operator >>(std::ifstream &in, Matrix &matrix) {
 void Matrix::print() const noexcept {
 	for (std::size_t i = 0; i < rows; i++) {
 		for (std::size_t j = 0; j < cols; j++) {
-			std::cout << data[i][j] << " ";
+			std::cout << data[i][j];
+			if (j + 1 < cols) {
+				std::cout << " ";
+			}
 		}
 		std::cout << std::endl;
 	}
 }
 
 void Matrix::add(const Matrix & other) {
-	if (rows != other.rows || cols != other.cols) {
-		throw MatrixException("ADD: dimensions do not match."); 
-	}
 	*this += other; 
 }
 
-void Matrix::operator +=(const Matrix & other) noexcept {
+void Matrix::operator +=(const Matrix & other) {
+	if (rows != other.rows || cols != other.cols) {
+		throw MatrixException("ADD: dimensions do not match."); 
+	}
 	for (std::size_t i = 0; i < rows; i++) {
 		for (std::size_t j = 0; j < cols; j++) {
 			data[i][j] += other.data[i][j];
@@ -63,13 +66,13 @@ void Matrix::operator +=(const Matrix & other) noexcept {
 }
 
 void Matrix::multiply(const Matrix & other) {
-	if (cols != other.rows) {
-		throw MatrixException("MUL: #arg1.columns != #arg2.rows.");
-	}
 	*this = *(*this * other);
 }
 
-std::unique_ptr<Matrix> Matrix::operator *(const Matrix & other) const noexcept {
+std::unique_ptr<Matrix> Matrix::operator *(const Matrix & other) const {
+	if (cols != other.rows) {
+		throw MatrixException("MUL: #arg1.columns != #arg2.rows.");
+	}
 	Matrix* product = new Matrix(rows, other.cols);
 	for (std::size_t i = 0; i < rows; i++) {
 		for (std::size_t j = 0; j < other.cols; j++) {
