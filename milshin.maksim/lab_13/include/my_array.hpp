@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdexcept>
+#include <stdint.h>
 
 namespace lab_13 {
 
@@ -26,7 +27,7 @@ private:
 
 
 //__________________________________________________________________________________________________________
-//____________________Realization___________________________________________________________________________
+//____________________Implementation___________________________________________________________________________
 //__________________________________________________________________________________________________________
 
 
@@ -100,17 +101,19 @@ public:
  			return data & (1 << (index % 8));
  		}
 
- 		void operator=(bool value) {
+ 		bool operator=(bool value) {
  			if (value == true) {
  				data |= (1 << (index % 8));
  			}
  			else {
  				data &= ((1 << 8) - 1) ^ (1 << index);
  			}
+ 			return value;
  		}
 
- 		void operator=(bool_reference &ref) {
+ 		bool_reference operator=(bool_reference ref) {
  			*this = (bool)ref;
+ 			return ref;
  		}
 
  	private:
@@ -144,7 +147,7 @@ public:
 
  	void fill(bool value) {
  		uint8_t val = value ? ((1 << 8) - 1) : 0;
- 		for (std::size_t i = 0; i < N; i++) {
+ 		for (std::size_t i = 0; i < (N + 7) / 8; i++) {
 			data[i] = val;
 		}
  	}

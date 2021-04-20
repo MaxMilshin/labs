@@ -1,5 +1,6 @@
 #include <stdexcept>
 #include <string.h>
+#include <cassert>
 #include "my_array.hpp"
 
 using lab_13::my_array;
@@ -74,6 +75,13 @@ void bool_specialization_test() {
 		arr[i] = false;
 	}
 
+	arr[0] = (arr[3] = true);
+	assert(arr.at(0) == true && arr.at(3) == true);
+
+	arr[3] = false;
+	arr[2] = false;
+	(arr[0] = arr[2]) = true; 
+	
 	for (std::size_t i = 0; i < SZ; i++) {
 		assert(arr.at(i) == (i % 3 == 0) ? false : true);
 	}
